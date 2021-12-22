@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+    </div>
+</body>
+<script>
+    var div = document.querySelector("div"); var data  = new XMLHttpRequest();
+    let url = `https://en.wikipedia.org/wiki/A#History`;
+    data.open("GET", `https://cors-anywhere.herokuapp.com/${url}`, true);data.responseType = "document";
+    data.onload = function() {
+        if(data.readyState == 4 && data.status == 200){
+            let response  = data.responseXML.querySelectorAll(".mw-parser-output p");
+            console.log(response);
+            for(let i = 0;i< response.length; i++){
+                if(i == 0){
+                    var h = document.createElement("h2");h.innerHTML = "<h2>History<h2>";document.body.appendChild(h);
+                }if(i == 12){
+                    var h = document.createElement("h2");h.innerHTML = "<h2>Use in writing systems<h2>";document.body.appendChild(h);
+                }if(i == 17){
+                    var h = document.createElement("h2");h.innerHTML = "<h2>Other uses<h2>";document.body.appendChild(h);
+                }
+                     var kp = document.createElement("p");kp.innerText =  response[i].innerText;kp.innerHTML = response[i].innerHTML;document.body.appendChild(kp);   
+            }
+        }
+    }
+
+    data.send();
+</script>
+</html>
